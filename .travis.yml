@@ -2,18 +2,20 @@ sudo: true
 language: bash
 env:
   global:
+    - BRANCH=stable
     - DOCKER_VERSION=1.6.2
-    - QUIET=1			# Less verbose logs
-    - UML_FIG=0			# Don't install fig
+    - QUIET=1			# Be less verbose
+    - UML_FIG=0			# Do not install fig
+    - UML_DOCKERCOMPOSE=0       # Do not install docker-composer
   matrix:
   - MONGO_VERSION=2.6
   - MONGO_VERSION=3.0
 install:
   - curl -sLo - http://j.mp/install-travis-docker | sh -xe
   - df -h
-  - ./run docker info
+  - ./run 'docker info'
   - mkdir -p data/mongo 
-  - ./run docker run --name "mongo-${MONGO_VERSION}" -v ${PWD}/data/mongo:data/db -p 27017 -d "mongo:${MONGO_VERSION}" --logpath /data/db/start.log
-  - ./run docker ps -a
+  - ./run 'docker run --name "mongo-${MONGO_VERSION}" -d "mongo:${MONGO_VERSION}"'
+  - ./run 'docker ps'
   - df -h
   
