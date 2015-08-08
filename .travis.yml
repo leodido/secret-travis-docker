@@ -12,7 +12,7 @@ install:
   - curl -sLo - http://j.mp/install-travis-docker | sh -xe
   - df -h
   - ./run docker info
-  - mkdir - data/mongo 
+  - mkdir -p data/mongo 
   - ./run docker run --name "mongo-${MONGO_VERSION}" -v ${PWD}/data/mongo:data/db -p 27017 -d "mongo:${MONGO_VERSION}" --logpath /data/db/start.log
   - ./run docker ps -a
   - df -h
