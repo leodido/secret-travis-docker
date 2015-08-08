@@ -1,0 +1,12 @@
+language: bash
+sudo: true
+env:
+  global:
+    - DOCKER_VERSION=1.6.2
+    - QUIET=1			# Less verbose logs
+    - UML_FIG=0			# Don't install fig
+
+install:
+  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
+  - df -h
+
