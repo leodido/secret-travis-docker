@@ -1,6 +1,8 @@
 language: bash
 sudo: true
 env:
+  - MONGO_VERSION=2.6
+  - MONGO_VERSION=3.0
   global:
     - DOCKER_VERSION=1.6.2
     - QUIET=1			# Less verbose logs
@@ -9,4 +11,9 @@ env:
 install:
   - curl -sLo - http://j.mp/install-travis-docker | sh -xe
   - df -h
-
+  - ./run docker info
+  - mkdir - data/mongo 
+  - ./run docker run --name "mongo-${MONGO_VERSION}" -v ${PWD}/data/mongo:data/db -p 27017 -d "mongo:${MONGO_VERSION}" --logpath /data/db/start.log
+  - ./run docker ps -a
+  - df -h
+  
