@@ -28,7 +28,6 @@ main() {
 		sed -i -e "$SUBST" ${TEMP}/Dockerfile
 		[[ ${TEMP} != ${DEST} ]] && mv ${TEMP} ${DEST}
 	)
-	
 }
 
 main "$@"
