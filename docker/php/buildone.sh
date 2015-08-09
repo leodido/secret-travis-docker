@@ -5,9 +5,9 @@ set -e
 cd "$(dirname "$(readlink -f "${BASH_SOURCE}")")"
 
 main() {
-	local PHP_VERSION=$1
+	PHP_VERSION=${1:-${PHP_VERSION}}
 	if [[ -z "${PHP_VERSION}" ]]; then
-		echo -e "Please specifiy a php versionversion ...\nExit."
+		echo -e "Please specifiy a php version ...\nExit."
 		exit 1	
 	fi
 	local TEMP=versions/"phpcli${PHP_VERSION}"
@@ -34,7 +34,7 @@ main() {
 		rm -rf "${TEMP}"/*
 		cp -r template/* "${TEMP}"/
 		sed -i -e "$SUBST" ${TEMP}/Dockerfile
-		mv ${TEMP} ${DEST}
+		[[ ${TEMP} != ${DEST} ]] && mv ${TEMP} ${DEST}
 	)	
 	
 }
