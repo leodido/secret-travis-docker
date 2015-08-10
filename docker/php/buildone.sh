@@ -14,11 +14,10 @@ main() {
 	fi
 	local TEMP=versions/"phpcli${PHP_VERSION}"
 	mkdir -p ${TEMP}
-	local DEST=${TEMP}
+	local DEST="${TEMP}${MONGO_VERSION:+-mongo${MONGO_VERSION}}${XDEBUG_VERSION:+-xdebug${XDEBUG_VERSION}}"
 	local SUBST="s/{{php_version}}/${PHP_VERSION}/g;"
-	
-	[[ -z "${MONGO_VERSION+x}" ]] && DEST=$DEST SUBST=${SUBST}" s/{{mongo_version}}//g;" || DEST=${DEST}"-mongo${MONGO_VERSION}" SUBST=${SUBST}" s/{{mongo_version}}/-${MONGO_VERSION}/g;"
-	[[ -z "${XDEBUG_VERSION+x}" ]] && DEST=$DEST SUBST=${SUBST}" s/{{xdebug_version}}//g;" || DEST=${DEST}"-xdebug${XDEBUG_VERSION}" SUBST=${SUBST}" s/{{xdebug_version}}/-${XDEBUG_VERSION}/g;"
+	[[ -z "${MONGO_VERSION+x}" ]] && SUBST=${SUBST}" s/{{mongo_version}}//g;" || SUBST=${SUBST}" s/{{mongo_version}}/-${MONGO_VERSION}/g;"
+	[[ -z "${XDEBUG_VERSION+x}" ]] && SUBST=${SUBST}" s/{{xdebug_version}}//g;" || SUBST=${SUBST}" s/{{xdebug_version}}/-${XDEBUG_VERSION}/g;"
 	
 	echo "Updating ${PHP_VERSION} ..."
 	(
