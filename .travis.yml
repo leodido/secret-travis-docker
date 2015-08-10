@@ -7,8 +7,8 @@ env:
 before_script:
   - ./docker/php/buildone.sh
   - IMG_DIR=docker/php/versions/phpcli${PHP_VERSION}
-  - if [[ ! -z "${MONGO_VERSION+x}" ]]; IMG_DIR=${IMG_DIR}"-mongo${MONGO_VERSION}"; fi
-  - if [[ ! -z "${XDEBUG_VERSION+x}" ]]; IMG_DIR=${IMG_DIR}"-xdebug${XDEBUG_VERSION}"; fi
+  - if [[ ! -z "${MONGO_VERSION+x}" ]]; then IMG_DIR=${IMG_DIR}"-mongo${MONGO_VERSION}"; fi
+  - if [[ ! -z "${XDEBUG_VERSION+x}" ]]; then IMG_DIR=${IMG_DIR}"-xdebug${XDEBUG_VERSION}"; fi
 
 script:
   - echo $IMG_DIR
