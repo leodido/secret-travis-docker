@@ -9,8 +9,6 @@ before_script:
   - DEST=phpcli${PHP_VERSION}
   - if [[ -z "${MONGO_VERSION+x}" ]]; then DEST=$DEST; SUBST=${SUBST}" s/{{mongo_version}}//g;"; else DEST=${DEST}"-mongo${MONGO_VERSION}"; SUBST=${SUBST}" s/{{mongo_version}}/-${MONGO_VERSION}/g;"; fi
   - if [[ -z "${XDEBUG_VERSION+x}" ]]; then DEST=$DEST; SUBST=${SUBST}" s/{{xdebug_version}}//g;"; else DEST=${DEST}"-xdebug${XDEBUG_VERSION}"; SUBST=${SUBST}" s/{{xdebug_version}}/-${XDEBUG_VERSION}/g;"; fi
-  - echo $DEST
-  - docker info
 
 script:
   - docker build -t img docker/php/versions/${DEST}
