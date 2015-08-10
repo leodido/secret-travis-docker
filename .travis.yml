@@ -8,7 +8,8 @@ before_script:
   - ./docker/php/buildone.sh
   - IMG_NAME="phpcli${PHP_VERSION}${MONGO_VERSION:+-mongo${MONGO_VERSION}}${XDEBUG_VERSION:+-xdebug${XDEBUG_VERSION}}"
   - docker build -t "${IMG_NAME}" "docker/php/versions/${IMG_NAME}"
-  - composer self-upload && composer install
+  - ls -l ${HOME}/.ssh
+  - docker run --rm -v $${PWD} -v ${HOME}/.ssh:/root/.ssh composer/composer install --ignore-platform-reqs
 
 script:
   - docker run --rm -v ${PWD} "${IMG_NAME}" php -r 'print_r(scandir(getcwd()));'
