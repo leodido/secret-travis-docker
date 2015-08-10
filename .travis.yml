@@ -6,12 +6,13 @@ env:
   - PHP_VERSION=5.5 MONGO_VERSION=1.5.0 MONGODB_VERSION=2.6
 before_script:
   - ./docker/php/buildone.sh
-  - DEST=phpcli${PHP_VERSION}
-  - if [[ -z "${MONGO_VERSION+x}" ]]; then DEST=$DEST; SUBST=${SUBST}" s/{{mongo_version}}//g;"; else DEST=${DEST}"-mongo${MONGO_VERSION}"; SUBST=${SUBST}" s/{{mongo_version}}/-${MONGO_VERSION}/g;"; fi
-  - if [[ -z "${XDEBUG_VERSION+x}" ]]; then DEST=$DEST; SUBST=${SUBST}" s/{{xdebug_version}}//g;"; else DEST=${DEST}"-xdebug${XDEBUG_VERSION}"; SUBST=${SUBST}" s/{{xdebug_version}}/-${XDEBUG_VERSION}/g;"; fi
+  - IMG_DIR=docker/php/versions/phpcli${PHP_VERSION}
+  - if [[ ! -z "${MONGO_VERSION+x}" ]]; IMG_DIR=${IMG_DIR}"-mongo${MONGO_VERSION}"; fi
+  - if [[ ! -z "${XDEBUG_VERSION+x}" ]]; IMG_DIR=${IMG_DIR}"-xdebug${XDEBUG_VERSION}"; fi
 
 script:
-  - docker build -t img docker/php/versions/${DEST}
+  - echo $IMG_DIR
+  - docker build -t prova ${IMG_DIR}
   - exit 0
 
 after_script:
