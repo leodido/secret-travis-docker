@@ -10,10 +10,9 @@ before_script:
 - "./docker/php/buildone.sh"
 - IMG_NAME="phpcli${PHP_VERSION}${MONGO_VERSION:+-mongo${MONGO_VERSION}}${XDEBUG_VERSION:+-xdebug${XDEBUG_VERSION}}"
 - docker build -t "${IMG_NAME}" "docker/php/versions/${IMG_NAME}"
-- docker run --name travis-composer -v ${PWD}:/app composer/composer config --global
-  github-oauth.github.com ${GH_TOKEN}
-- docker exec -i travis-composer composer install --ignore-platform-reqs
+- docker run --rm -v ${PWD}:/app composer/composer sh -c "config --global github-oauth.github.com ${GH_TOKEN} && install --ignore-platform-reqs" 
 - ls -l ${PWD}
+- ls -l ${PWD}/vendor
 script:
 - docker run --rm -v ${PWD} "${IMG_NAME}" php -r 'print_r(scandir(getcwd()));'
 after_script:
