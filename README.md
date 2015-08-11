@@ -9,4 +9,4 @@ secret travis docker
 
 ---
 
-[![Analytics](https://ga-beacon.appspot.com/UA-49657176-1/secret-travis-docker)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-49657176-1/secret-travis-docker?flat)](https://github.com/igrigorik/ga-beacon)
