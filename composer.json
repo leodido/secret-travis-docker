@@ -1,5 +1,6 @@
 {
     "name": "leodido/travis-docker-ex",
+    "description": "",
     "license": "MIT",
     "authors": [
         {
