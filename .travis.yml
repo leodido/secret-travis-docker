@@ -11,7 +11,7 @@ before_script:
 - IMG_NAME="phpcli${PHP_VERSION}${MONGO_VERSION:+-mongo${MONGO_VERSION}}${XDEBUG_VERSION:+-xdebug${XDEBUG_VERSION}}"
 - docker build -t "${IMG_NAME}" "docker/php/versions/${IMG_NAME}"
 - sed -i -e "s/token/${GH_TOKEN}/g" auth.json
-- docker run --rm -v ${PWD}:/app composer/composer install --ignore-platform-reqs" 
+- docker run --rm -v ${PWD}:/app composer/composer install --ignore-platform-reqs
 - ls -l ${PWD}
 - ls -l ${PWD}/vendor
 script:
