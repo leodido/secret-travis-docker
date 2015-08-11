@@ -1,18 +1,21 @@
 language: bash
-# secret experimental feature :)
 sudo: 9000
 env:
+  matrix:
   - PHP_VERSION=5.5 MONGO_VERSION=1.6.0 MONGODB_VERSION=2.4
   - PHP_VERSION=5.5 MONGO_VERSION=1.5.0 MONGODB_VERSION=2.6
+  global:
+    secure: Cs00ZzSEhkjPxkzHxBGS8mlZSOx3efYmKT24uVbx3f6zCgqrI7qS80GNgbrGUdSQ0Ofw6Q7f02hP11g5Dw8LtdhSePEapqpeGSW0eiheUiyg3zNIlksFYKs7N11XVF6bc5MtgyaGWDarpxWcnndFIdc59cg/rBFqEcL7jZi7Tnp4JBY1n6KieHDBOg9o+qVm42JaNcoNDOTw5Q/IUUzAAVmO3LEP6btv5YK1Zw2spbrqy5ChVcoifH/rKsDdN6DhPu93sBV7VpQk3rS68mnoKEq1VDh6cB9100zwfZbH4ZUKdaWovK/Ackoq3oGJgbrEzxIb2aNmAYyjstGxSLFbyNBvBw4G1C9eAPDBuRiaDQCPO0Nur4d9kGifUs+4MSdXxYzKUl4e2GiDNggDLOyJur9uTWrvp10/IB2p4o4z/GxTaIEZyWTxkZw/3kRJ5k5tVGA3Gu1pchVBDrvuGPnfvGHK7ls6bpWXooczhA2fLx6cUgbmAKiAwdIMYejWc9htZQRuGz0BDZBgYTK7Wu91lY/TIkfWyD69m7R6J9Q3Zn6BpwZLtub2Ru//Z+O5SZmXyJmiWojH/Jf41rykNe19ZwGnKk3DylEEirWF2j/IdTHSTxPjtoHv43qanx0jnDnq6QOhCtHFTMHBn2U23IP91hoLzSuPVWpXTwlR3J0pwVI=
 before_script:
-  - ./docker/php/buildone.sh
-  - IMG_NAME="phpcli${PHP_VERSION}${MONGO_VERSION:+-mongo${MONGO_VERSION}}${XDEBUG_VERSION:+-xdebug${XDEBUG_VERSION}}"
-  - docker build -t "${IMG_NAME}" "docker/php/versions/${IMG_NAME}"
-  - docker run --rm -v ${PWD}:/app composer/composer install --ignore-platform-reqs
-
+- "./docker/php/buildone.sh"
+- IMG_NAME="phpcli${PHP_VERSION}${MONGO_VERSION:+-mongo${MONGO_VERSION}}${XDEBUG_VERSION:+-xdebug${XDEBUG_VERSION}}"
+- docker build -t "${IMG_NAME}" "docker/php/versions/${IMG_NAME}"
+- docker run --name travis-composer -v ${PWD}:/app composer/composer config --global
+  github-oauth.github.com ${GH_TOKEN}
+- docker exec -i travis-composer composer install --ignore-platform-reqs
+- ls -l ${PWD}
 script:
-  - docker run --rm -v ${PWD} "${IMG_NAME}" php -r 'print_r(scandir(getcwd()));'
-
+- docker run --rm -v ${PWD} "${IMG_NAME}" php -r 'print_r(scandir(getcwd()));'
 after_script:
-  - docker images
-  - docker info
+- docker images
+- docker info
