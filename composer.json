@@ -1,0 +1,14 @@
+{
+    "name": "leodido/travis-docker-ex",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Leonardo Di Donato",
+            "email": "leodidonato@gmail.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "~4.7"
+    },
+    "minimum-stability": "stable"
+}
